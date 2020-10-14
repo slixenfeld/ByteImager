@@ -1,14 +1,12 @@
-package GUI;
+package de.GUI;
 
-import Utility.Encoder;
+import de.Utility.Encoder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class ProgramWindow extends JFrame implements ActionListener {
+public class MainWindow extends JFrame implements ActionListener {
 
     private static final int defaultWidth = 640;
     private static final int defaultHeight = 450;
@@ -18,7 +16,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
     private JButton decodeButton;
     private JTextArea textArea;
 
-    public ProgramWindow() {
+    public MainWindow() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
         }
@@ -28,8 +26,6 @@ public class ProgramWindow extends JFrame implements ActionListener {
     }
 
     public void applyDefaultSettings() {
-
-
         this.setTitle("Byte Image Encoder");
         this.setSize(defaultWidth,defaultHeight);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

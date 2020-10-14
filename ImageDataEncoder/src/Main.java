@@ -1,10 +1,7 @@
-import GUI.ProgramWindow;
-import Utility.Util;
-
-import javax.swing.*;
+import de.GUI.MainWindow;
 
 public class Main {
     public static void main(String args[]) {
-        new ProgramWindow();
+        new MainWindow();
     }
 }

@@ -1,2 +1,9 @@
 # Byte Image Encoder
-Convert Data To Pixels
+Converts Data To Pixels <br>
+
+# Example
+The generated image below contains 250 paragraphs of Lorem Ipsum <p/>
+![Example Image](example.PNG)
+
+# Author 
+***Simon Lixenfeld 2020***
