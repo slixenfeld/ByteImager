@@ -6,4 +6,4 @@ The generated image below contains 250 paragraphs of Lorem Ipsum <p/>
 ![Example Image](example.PNG)
 
 # Author 
-***Simon Lixenfeld 2020***
+*Simon Lixenfeld 2020*
