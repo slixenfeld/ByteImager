@@ -1,10 +1,7 @@
-package Utility;
+package de.Utility;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.ByteArrayOutputStream;
 
 public class Encoder {
 
@@ -41,7 +38,7 @@ public class Encoder {
 
             x++;
             if(x > Util.imageSize) {
-                x = 1;
+                x = 0;
                 y++;
             }
             g.fillRect(x, y, 1, 1);

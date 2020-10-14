@@ -1,13 +1,12 @@
-package GUI;
+package de.GUI;
 
-import Utility.Util;
+import de.Utility.Util;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class OutputPreview extends JPanel {
-
 
     private BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
 
