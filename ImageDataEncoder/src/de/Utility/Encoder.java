@@ -3,6 +3,7 @@ package de.Utility;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
 public class Encoder {
 
     public static int add = 0;
@@ -12,18 +13,18 @@ public class Encoder {
         BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.createGraphics();
 
-        int index = 0;
-        int x = 0;
-        int y = 0;
+        int currentChar = 0;
+        int gridX = 0;
+        int gridY = 0;
 
-        while (index < text.length()) {
+        while (currentChar < text.length()) {
 
-            index++;
-            int red = (index >= text.length()) ? 0 : (int) text.charAt(index);
-            index++;
-            int green = (index >= text.length()) ? 0 : (int) text.charAt(index);
-            index++;
-            int blue = (index >= text.length()) ? 0 : (int) text.charAt(index);
+            currentChar++;
+            int red = (currentChar >= text.length()) ? 0 : (int) text.charAt(currentChar);
+            currentChar++;
+            int green = (currentChar >= text.length()) ? 0 : (int) text.charAt(currentChar);
+            currentChar++;
+            int blue = (currentChar >= text.length()) ? 0 : (int) text.charAt(currentChar);
 
             red = ((red + add) > 0xFF) ? ((red+add) - 0xFF) : (red + add);
             green = ((green + add) > 0xFF) ? ((green+add) - 0xFF) : (green + add);
@@ -36,22 +37,20 @@ public class Encoder {
                 Util.log("pixel was outside of color range: ("+(blue+add)+","+(green+add)+","+(red+add)+")");
             }
 
-            x++;
-            if(x > Util.imageSize) {
-                x = 0;
-                y++;
+            gridX++;
+            if(gridX > Util.imageSize) {
+                gridX = 0;
+                gridY++;
             }
-            g.fillRect(x, y, 1, 1);
+            g.fillRect(gridX, gridY, 1, 1);
         }
         return image;
     }
 
     public static String decode(BufferedImage image) {
-        String ret = "";
-        int index = 0;
+        StringBuilder decodedText = new StringBuilder();
         for(int i = 0; i < image.getHeight(); i++)
             for(int j = 0; j < image.getWidth(); j++) {
-
                 int pixel = image.getRGB(j, i);
                 int red = (pixel >> 16) & 0xff;
                 int green = (pixel >> 8) & 0xff;
@@ -61,10 +60,8 @@ public class Encoder {
                 green = ((green - add) <= 0) ? green : (green-add);
                 blue = ((blue - add) <= 0) ? blue : (blue-add);
 
-                ret +=  ((char) (red)) + "" +((char) (green)) + "" +((char) (blue)) +"";
+                decodedText.append((char) (red)).append((char) (green)).append((char) (blue));
             }
-
-        Util.log("Decoded: " + ret);
-        return ret;
+        return decodedText.toString();
     }
 }

@@ -1,6 +1,7 @@
 package de.GUI;
 
 import de.Utility.Encoder;
+import de.Utility.Util;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +20,7 @@ public class MainWindow extends JFrame implements ActionListener {
     public MainWindow() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-        }
-        catch (Exception e) { }
+        } catch (Exception e) { }
         addComponents();
         applyDefaultSettings();
     }
@@ -53,18 +53,18 @@ public class MainWindow extends JFrame implements ActionListener {
         textArea = new JTextArea("");
         textArea.setLineWrap(true);
 
-        JScrollPane sp = new JScrollPane(textArea);
-        sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        sp.setSize(300,350);
-        sp.setLocation(20,20);
-        this.add(sp);
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setSize(300,350);
+        scroll.setLocation(20,20);
+        this.add(scroll);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == encodeButton)
             preview.updateImage(Encoder.encode(textArea.getText()));
-        if (e.getSource() == decodeButton)
-            Encoder.decode(preview.getImage());
+        else if (e.getSource() == decodeButton)
+            Util.log("Decoded: " + Encoder.decode(preview.getImage()));
     }
 }
