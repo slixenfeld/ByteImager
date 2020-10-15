@@ -1,20 +1,22 @@
 package de.GUI;
 
-import de.Utility.Encoder;
-import de.Utility.Util;
+import de.GUI.panes.FileEncodingPane;
+import de.GUI.panes.TextEncodingPane;
+import de.Utility.FileManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JFrame implements UIDefault, ActionListener {
 
     private static final int defaultWidth = 640;
     private static final int defaultHeight = 450;
 
+    JTabbedPane tabs;
     OutputPreview preview = new OutputPreview();
-    private JButton encodeButton;
-    private JButton decodeButton;
+    private JButton saveButton;
+    private JButton loadButton;
     private JTextArea textArea;
 
     public MainWindow() {
@@ -34,37 +36,35 @@ public class MainWindow extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private void addComponents() {
+    public void addComponents() {
+        tabs = new JTabbedPane();
+        tabs.setSize(320,390);
+        tabs.setLocation(10,10);
+        tabs.addTab("Text", new TextEncodingPane(preview));
+        tabs.addTab("File", new FileEncodingPane(preview));
+        this.add(tabs);
+
+        loadButton = new JButton("Load");
+        loadButton.setSize(100,30);
+        loadButton.setLocation( 380,300);
+        loadButton.addActionListener(this);
+        this.add(loadButton);
+
+        saveButton = new JButton("Save");
+        saveButton.setSize(100,30);
+        saveButton.setLocation(490,300);
+        saveButton.addActionListener(this);
+        this.add(saveButton);
+
         preview.setLocation(350,30);
         this.add(preview);
-
-        encodeButton = new JButton("Encode");
-        encodeButton.setSize(100,30);
-        encodeButton.setLocation(360,300);
-        encodeButton.addActionListener(this);
-        this.add(encodeButton);
-
-        decodeButton = new JButton("Decode");
-        decodeButton.setSize(100,30);
-        decodeButton.setLocation(480,300);
-        decodeButton.addActionListener(this);
-        this.add(decodeButton);
-
-        textArea = new JTextArea("");
-        textArea.setLineWrap(true);
-
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scroll.setSize(300,350);
-        scroll.setLocation(20,20);
-        this.add(scroll);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == encodeButton)
-            preview.updateImage(Encoder.encode(textArea.getText()));
-        else if (e.getSource() == decodeButton)
-            Util.log("Decoded: " + Encoder.decode(preview.getImage()));
+        if (e.getSource() == loadButton)
+            preview.updateImage(FileManager.loadImage(this));
+        if (e.getSource() == saveButton)
+            FileManager.saveImage(preview.getImage(), this);
     }
 }
