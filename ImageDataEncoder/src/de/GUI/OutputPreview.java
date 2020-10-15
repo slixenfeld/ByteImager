@@ -19,7 +19,7 @@ public class OutputPreview extends JPanel {
     }
 
     public void updateImage(BufferedImage image) {
-        this.image = image;
+        setImage(image);
         repaint();
     }
 
