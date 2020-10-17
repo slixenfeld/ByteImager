@@ -1,14 +1,17 @@
-package de.Utility;
+package de.Utility.encoding;
+
+import de.Utility.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-
-public class Encoder {
-
+public class RGBEncoder extends Encoder {
     public static int add = 0;
 
-    public static BufferedImage encode(String text) {
+    public RGBEncoder() { }
+
+    @Override
+    public BufferedImage encode(String text) {
         text = " " + text;
         BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.createGraphics();
@@ -43,11 +46,13 @@ public class Encoder {
                 gridY++;
             }
             g.fillRect(gridX, gridY, 1, 1);
+
         }
         return image;
     }
 
-    public static String decode(BufferedImage image) {
+    @Override
+    public String decode(BufferedImage image) {
         StringBuilder decodedText = new StringBuilder();
         for(int i = 0; i < image.getHeight(); i++)
             for(int j = 0; j < image.getWidth(); j++) {
@@ -64,4 +69,5 @@ public class Encoder {
             }
         return decodedText.toString();
     }
+
 }
