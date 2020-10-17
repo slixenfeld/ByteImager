@@ -1,29 +1,21 @@
 package de.GUI.panes;
 
 import de.GUI.MainWindow;
-import de.GUI.OutputPreview;
 import de.GUI.UIDefault;
-import de.Utility.encoding.BWEncoder;
-import de.Utility.encoding.Encoder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TextEncodingPane extends JPanel implements UIDefault, ActionListener {
+public class TextEncodingPane extends EncodingPane implements UIDefault, ActionListener {
 
     JButton encodeButton;
     JButton decodeButton;
+
     JTextArea inputText;
     JTextArea outputText;
 
-    OutputPreview preview;
-
-    public Encoder encoder;
-
-    public TextEncodingPane(OutputPreview preview, Encoder encoder) {
-        this.preview = preview;
-        this.encoder = encoder;
+    public TextEncodingPane() {
         applyDefaultSettings();
         addComponents();
     }
@@ -67,9 +59,9 @@ public class TextEncodingPane extends JPanel implements UIDefault, ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == encodeButton) {
-            preview.updateImage(encoder.encode(inputText.getText()));
+            MainWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
         }
         else if (e.getSource() == decodeButton)
-            outputText.setText(encoder.decode(preview.getImage()));
+            outputText.setText(MainWindow.encoder.decode(MainWindow.preview.getImage()));
     }
 }

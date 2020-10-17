@@ -5,12 +5,11 @@ import de.GUI.UIDefault;
 
 import javax.swing.*;
 
-public class FileEncodingPane extends JPanel implements UIDefault {
+public class FileEncodingPane extends EncodingPane implements UIDefault {
 
-    OutputPreview preview;
-
-    public FileEncodingPane(OutputPreview preview) {
-        this.preview = preview;
+    public FileEncodingPane() {
+        applyDefaultSettings();
+        addComponents();
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.GUI;
 import de.GUI.panes.FileEncodingPane;
 import de.GUI.panes.TextEncodingPane;
 import de.Utility.FileManager;
+import de.Utility.Util;
 import de.Utility.encoding.BWEncoder;
 import de.Utility.encoding.Encoder;
 import de.Utility.encoding.RGBEncoder;
@@ -17,10 +18,10 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
     private static final int defaultHeight = 450;
 
     JTabbedPane tabs;
-    TextEncodingPane textPane;
-    FileEncodingPane filePane;
+    TextEncodingPane textPane = new TextEncodingPane();
+    FileEncodingPane filePane = new FileEncodingPane();
 
-    OutputPreview preview = new OutputPreview();
+    public static OutputPreview preview = new OutputPreview();
     private JButton saveButton;
     private JButton loadButton;
 
@@ -29,12 +30,12 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
     public static JRadioButton bwRadio;
     private ButtonGroup encoderGroup;
 
-    Encoder encoder;
+    public static Encoder encoder = new RGBEncoder();
 
     public MainWindow() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-        } catch (Exception e) { }
+        } catch (Exception e) { Util.log("Windows Classic Look And Feel Not Supported."); }
         addComponents();
         applyDefaultSettings();
     }
@@ -49,14 +50,13 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
     }
 
     public void addComponents() {
+
+        textPane = new TextEncodingPane();
+        filePane = new FileEncodingPane();
+
         tabs = new JTabbedPane();
         tabs.setSize(320,390);
         tabs.setLocation(10,10);
-        encoder = new RGBEncoder();
-
-        filePane = new FileEncodingPane(preview);
-        textPane = new TextEncodingPane(preview, encoder);
-
         tabs.addTab("Text", textPane);
         tabs.addTab("File", filePane);
         this.add(tabs);
@@ -110,7 +110,5 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
             encoder = new RGBEncoder();
         else if (e.getSource() == bwRadio)
             encoder = new BWEncoder();
-
-        textPane.encoder = encoder;
     }
 }
