@@ -15,79 +15,65 @@ public class BWEncoder extends Encoder {
         BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.createGraphics();
 
-        int currentChar = 1;
-        int gridX = 0;
-        int gridY = 0;
+        int charPos = 1;
+        grid = new Point(0,0);
 
-        while (currentChar < text.length()) {
+        while (charPos < text.length()) {
 
-            int n = text.charAt(currentChar);
-
+            int n = text.charAt(charPos);
             for(int i = 7; i >= 0; i--) {
-
-                if (((n >> i) & 1) == 0) {
+                if (((n >> i) & 1) == 0)
                     g.setColor(Color.WHITE);
-                }else {
+                else
                     g.setColor(Color.BLACK);
-                }
+                g.fillRect(grid.x, grid.y, 1, 1);
 
-                g.fillRect(gridX, gridY, 1, 1);
-                gridX++;
-                if (gridX >= Util.imageSize) { gridX = 0; gridY++; }
+                getNextCoordinates();
             }
-            currentChar++;
+            charPos++;
         }
         g.setColor(new Color(255,0,0));
-        g.fillRect(gridX, gridY, 1, 1);
-            return image;
+        g.fillRect(grid.x, grid.y, 1, 1);
+        return image;
     }
 
     @Override
     public String decode(BufferedImage image) {
         StringBuilder decodedText = new StringBuilder();
 
-        int count = 0;
+        int bitCounter = 0;
         int[] bits = new int[8];
-
-        int gridX = 0;
-        int gridY = 0;
+        grid = new Point(0,0);
 
         while(true) {
-
-            int pixel = image.getRGB(gridX, gridY);
+            int pixel = image.getRGB(grid.x, grid.y);
             int red = (pixel >> 16) & 0xff;
             int green = (pixel >> 8) & 0xff;
             int blue = (pixel) & 0xff;
 
             if ((red + green + blue) > 200)
-                bits[count] = 0;
+                bits[bitCounter] = 0;
             else
-                bits[count] = 1;
+                bits[bitCounter] = 1;
 
-            count++;
-
-            if (count == 8) {
-                int n = 0;
-
-                n += Math.pow(bits[0]*2,7);
-                n += Math.pow(bits[1]*2,6);
-                n += Math.pow(bits[2]*2,5);
-                n += Math.pow(bits[3]*2,4);
-                n += Math.pow(bits[4]*2,3);
-                n += Math.pow(bits[5]*2,2);
-                n += Math.pow(bits[6]*2,1);
-                n += bits[7];
-
-                count = 0;
+            bitCounter++;
+            if (bitCounter == 8) {
+                decodedText.append(assembleChar(bits));
+                bitCounter = 0;
                 bits = new int[8];
-                decodedText.append((char) n);
             }
-            gridX++;
-            if (gridX >= Util.imageSize) { gridX = 0; gridY++; }
+            getNextCoordinates();
+
             if(red > 250 && blue == 0 && green == 0)
-            {
                 return decodedText.toString();
-            }
         }
+    }
+
+    private char assembleChar(int[] bits) {
+        int n = 0;
+        for(int i = 0; i < 7; i++)
+            n += Math.pow(bits[i]*2,7-i);
+        n += bits[7];
+        return (char) n;
     }
 }
