@@ -58,9 +58,8 @@ public class TextEncodingPane extends EncodingPane implements UIDefault, ActionL
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == encodeButton) {
+        if (e.getSource() == encodeButton)
             MainWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
-        }
         else if (e.getSource() == decodeButton)
             outputText.setText(MainWindow.encoder.decode(MainWindow.preview.getImage()));
     }
