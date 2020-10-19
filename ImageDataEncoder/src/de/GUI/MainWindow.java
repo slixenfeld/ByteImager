@@ -17,9 +17,9 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
     private static final int defaultWidth = 640;
     private static final int defaultHeight = 450;
 
-    JTabbedPane tabs;
-    TextEncodingPane textPane = new TextEncodingPane();
-    FileEncodingPane filePane = new FileEncodingPane();
+    private JTabbedPane tabs;
+    private TextEncodingPane textPane = new TextEncodingPane();
+    private FileEncodingPane filePane = new FileEncodingPane();
 
     public static OutputPreview preview = new OutputPreview();
     private JButton saveButton;
