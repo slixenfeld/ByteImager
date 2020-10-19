@@ -11,8 +11,4 @@ public class Util {
         Date time = Calendar.getInstance().getTime();
         System.out.println(time + " " + line);
     }
-
-    public static int  getBit(int n, int k) {
-        return (n >> k) & 1;
-    }
 }
