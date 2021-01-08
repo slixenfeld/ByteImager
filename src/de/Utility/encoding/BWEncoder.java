@@ -5,8 +5,12 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.GUI.panes.FileEncodingPane;
+import de.Utility.FileManager;
 import de.Utility.Util;
 
 public class BWEncoder extends Encoder {
@@ -125,7 +129,51 @@ public class BWEncoder extends Encoder {
 
 	@Override
 	public File decodeToFile(FileEncodingPane pane, BufferedImage image) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		byte[] decodedBytes = new byte[Encoder.byteArraySize];
+		int counter = -1;
+		int bitCounter = 0;
+		int[] bits = new int[8];
+		grid = new Point(0, 0);
+
+		while (true) {
+			int pixel = image.getRGB(grid.x, grid.y);
+			
+			
+			int red = (pixel >> 16) & 0xff;
+			int green = (pixel >> 8) & 0xff;
+			int blue = (pixel) & 0xff;
+
+			if ((red + green + blue) > 200)
+				bits[bitCounter] = 0;
+			else
+				bits[bitCounter] = 1;
+
+			bitCounter++;
+			if (bitCounter == 8) {
+				counter++;
+				decodedBytes[counter] = (byte) assembleChar(bits);
+				bitCounter = 0;
+				bits = new int[8];
+			}
+			
+			getNextCoordinate();
+			
+			if (red > 250 && blue == 0 && green == 0 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1)
+				break;
+		}
+		
+		File outputFile = FileManager.saveFile(pane);
+		try (FileOutputStream stream = new FileOutputStream(outputFile)) {
+			stream.write(decodedBytes);
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return outputFile;
 	}
 }
