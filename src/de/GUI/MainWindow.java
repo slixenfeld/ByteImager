@@ -110,13 +110,20 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loadButton)
-            preview.updateImage(FileManager.loadImage(this));
-        else if (e.getSource() == saveButton)
-            FileManager.saveImage(preview.getImage(), this);
-
-        else if (e.getSource() == rgbRadio)
+			loadImage();
+		else if (e.getSource() == saveButton)
+			saveImage();
+		else if (e.getSource() == rgbRadio)
             encoder = new RGBEncoder();
         else if (e.getSource() == bwRadio)
             encoder = new BWEncoder();
     }
+
+	private void saveImage() {
+		FileManager.saveImage(preview.getImage(), this);
+	}
+
+	private void loadImage() {
+		preview.updateImage(FileManager.loadImage(this));
+	}
 }
