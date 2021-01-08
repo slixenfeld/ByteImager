@@ -11,7 +11,7 @@ public abstract class Encoder {
 
     public Encoder() { }
 
-    public void getNextCoordinates() {
+    public void getNextCoordinate() {
         grid.x = ((grid.x+1) >= Util.imageSize) ? 0 : (grid.x+1);
         grid.y = (grid.x == 0) ? (grid.y+1) : grid.y;
     }
