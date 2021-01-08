@@ -61,11 +61,12 @@ public class TextEncodingPane extends EncodingPane implements UIDefault, ActionL
         decodeButton.addActionListener(this);
         this.add(decodeButton);
     }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == encodeButton)
             MainWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
         else if (e.getSource() == decodeButton)
-            outputText.setText(MainWindow.encoder.decode(MainWindow.preview.getImage()));
+            outputText.setText(MainWindow.encoder.decodeToText(MainWindow.preview.getImage()));
     }
 }

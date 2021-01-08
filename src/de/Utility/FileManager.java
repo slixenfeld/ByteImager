@@ -1,20 +1,53 @@
 package de.Utility;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
+import de.GUI.panes.FileEncodingPane;
+import de.Utility.encoding.Encoder;
 
 public class FileManager {
 
     final static JFileChooser fc = new JFileChooser();
 
+    public static File saveFile(FileEncodingPane fileEncodingPane) {
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");
+        File fileToSave = null;
+        
+        int userSelection = fileChooser.showSaveDialog(fileEncodingPane);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            fileToSave = fileChooser.getSelectedFile();
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        }
+        return fileToSave;
+    }
+    
+    public static File chooseFile(FileEncodingPane fileEncodingPane) {
+    	File returnFile = null;
+    	int returnVal = fc.showOpenDialog(fileEncodingPane);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	returnFile = fc.getSelectedFile();
+        } else {
+            Util.log("Open cancelled by user.");
+        }
+        return returnFile;
+    }
+    
     public static BufferedImage loadImage(JFrame parent) {
 
-        int returnVal = fc.showOpenDialog(parent);
-
         BufferedImage img = null;
+        
+        int returnVal = fc.showOpenDialog(parent);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
@@ -33,7 +66,6 @@ public class FileManager {
 
     public static void saveImage(BufferedImage image, JFrame parent) {
 
-
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Specify a file to save");
 
@@ -51,4 +83,30 @@ public class FileManager {
 
         }
     }
+
+    public static int[] loadFileIntoArray(File file)
+    {
+        FileInputStream fileInputStream = null;
+        byte[] bFile = new byte[(int) file.length()];
+        int[] bnewFile = new int[(int) file.length()];
+        Encoder.byteArraySize = bFile.length;
+        try
+        {
+           fileInputStream = new FileInputStream(file);
+           fileInputStream.read(bFile);
+           fileInputStream.close();
+        }
+        catch (Exception e)
+        {
+           e.printStackTrace();
+        }
+        
+        // convert to int array so it works idk
+        for(int i = 0 ; i < bFile.length; i++)
+        	bnewFile[i] = (bFile[i] & 0xff);
+        
+        return bnewFile;
+     }
+
+    
 }

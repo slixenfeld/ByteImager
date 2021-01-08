@@ -1,12 +1,16 @@
 package de.Utility.encoding;
 
-import de.Utility.Util;
-
-import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
+
+import de.GUI.panes.FileEncodingPane;
+import de.Utility.Util;
 
 public abstract class Encoder {
 
+	public static int byteArraySize = 0;
+	
     public Point grid;
 
     public Encoder() { }
@@ -17,6 +21,10 @@ public abstract class Encoder {
     }
 
     public abstract BufferedImage encode(String text);
+    
+    public abstract BufferedImage encode(int[] bytes);
 
-    public abstract String decode(BufferedImage image);
+    public abstract String decodeToText(BufferedImage image);
+    
+    public abstract File decodeToFile(FileEncodingPane pane, BufferedImage image);
 }
