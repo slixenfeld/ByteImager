@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import de.GUI.MainWindow;
+import de.GUI.PreviewWindow;
 import de.GUI.UIDefault;
 
 public class TextEncodingPane extends EncodingPane implements UIDefault, ActionListener {
@@ -65,8 +66,8 @@ public class TextEncodingPane extends EncodingPane implements UIDefault, ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == encodeButton)
-            MainWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
+        	PreviewWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
         else if (e.getSource() == decodeButton)
-            outputText.setText(MainWindow.encoder.decodeToText(MainWindow.preview.getImage()));
+            outputText.setText(MainWindow.encoder.decodeToText(PreviewWindow.preview.getImage()));
     }
 }

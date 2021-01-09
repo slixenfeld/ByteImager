@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import de.GUI.MainWindow;
 import de.GUI.panes.FileEncodingPane;
 import de.Utility.FileManager;
 import de.Utility.Util;
@@ -22,6 +23,9 @@ public class RGBEncoder extends Encoder {
 	@Override
 	public BufferedImage encode(String text) {
 		text = " " + text;
+		
+		determineImageSize(text.length());
+		
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.createGraphics();
 
@@ -55,6 +59,9 @@ public class RGBEncoder extends Encoder {
 
 	@Override
 	public BufferedImage encode(int[] bytes) {
+		
+		determineImageSize(bytes.length);
+		
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.createGraphics();
 
@@ -143,6 +150,26 @@ public class RGBEncoder extends Encoder {
 		}
 
 		return outputFile;
+	}
+
+
+
+
+
+
+	@Override
+	public void determineImageSize(int n) {
+    	for(int i = 5 ; i < 11 ; i++) {
+    		
+    		int newSize = (int) Math.pow(2, i);
+    		int allPixels = newSize * newSize;
+    		
+	    	if ((n/3) <= allPixels)  {
+	    		Util.imageSize = newSize;
+	    		MainWindow.previewWindow.setSize(100 + newSize,100 + newSize);
+	    		break;
+	    	}
+    	}
 	}
 
 }

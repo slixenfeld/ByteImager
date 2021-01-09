@@ -19,14 +19,14 @@ public class FileManager {
     public static File saveFile(FileEncodingPane fileEncodingPane) {
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Save File");
         File fileToSave = null;
         
         int userSelection = fileChooser.showSaveDialog(fileEncodingPane);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             fileToSave = fileChooser.getSelectedFile();
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            Util.log("Save File: " + fileToSave.getAbsolutePath());
         }
         return fileToSave;
     }
