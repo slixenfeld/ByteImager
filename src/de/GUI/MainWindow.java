@@ -55,7 +55,6 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
         this.addComponentListener(new ComponentAdapter() {
         	public void componentMoved(ComponentEvent e) {
         	
-        		
             	previewWindow.setLocation(MainWindow.this.getLocation().x + MainWindow.this.getWidth(),MainWindow.this.getLocation().y);
         	}
         });
