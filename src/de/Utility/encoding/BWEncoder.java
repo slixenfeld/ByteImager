@@ -22,9 +22,9 @@ public class BWEncoder extends Encoder {
 	@Override
 	public BufferedImage encode(String text) {
 		text = " " + text;
-		
+
 		determineImageSize(text.length());
-		
+
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
 
@@ -39,24 +39,24 @@ public class BWEncoder extends Encoder {
 
 		return image;
 	}
-	
+
 	@Override
 	public BufferedImage encode(int[] bytes) {
-		
+
 		determineImageSize(bytes.length);
-		
+
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
-		
+
 		int charPos = 0;
 		grid = new Point(0, 0);
-		
-		for (int i = 0 ; i < bytes.length; i++) {
-			paintByteToGrid((char)bytes[i], g, charPos);
+
+		for (int i = 0; i < bytes.length; i++) {
+			paintByteToGrid((char) bytes[i], g, charPos);
 		}
-		
+
 		placeEndpoint(g);
-		
+
 		return image;
 	}
 
@@ -86,7 +86,7 @@ public class BWEncoder extends Encoder {
 		}
 		charPos++;
 	}
-	
+
 	private void placeEndpoint(Graphics g) {
 		g.setColor(new Color(1, 1, 1));
 
@@ -106,23 +106,22 @@ public class BWEncoder extends Encoder {
 			int red = (pixel >> 16) & 0xff;
 			int green = (pixel >> 8) & 0xff;
 			int blue = (pixel) & 0xff;
-			
-			
+
 			if ((red + green + blue) > 200)
 				bits[bitCounter] = 0;
 			else
 				bits[bitCounter] = 1;
-			
+
 			bitCounter++;
 			if (bitCounter == 8) {
 				decodedText.append(assembleChar(bits));
 				bitCounter = 0;
 				bits = new int[8];
 			}
-			
+
 			getNextCoordinate();
 
-			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1) {
+			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize - 1 || grid.y > Util.imageSize - 1) {
 				return decodedText.toString();
 			}
 		}
@@ -139,7 +138,7 @@ public class BWEncoder extends Encoder {
 
 	@Override
 	public File decodeToFile(FileEncodingPane pane, BufferedImage image) {
-		
+
 		byte[] decodedBytes = new byte[Encoder.byteArraySize];
 		int counter = -1;
 		int bitCounter = 0;
@@ -147,7 +146,7 @@ public class BWEncoder extends Encoder {
 		grid = new Point(0, 0);
 
 		while (true) {
-			
+
 			int pixel = image.getRGB(grid.x, grid.y);
 			int red = (pixel >> 16) & 0xff;
 			int green = (pixel >> 8) & 0xff;
@@ -165,13 +164,13 @@ public class BWEncoder extends Encoder {
 				bitCounter = 0;
 				bits = new int[8];
 			}
-			
+
 			getNextCoordinate();
-			
-			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1)
+
+			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize - 1 || grid.y > Util.imageSize - 1)
 				break;
 		}
-		
+
 		File outputFile = FileManager.saveFile(pane);
 		try (FileOutputStream stream = new FileOutputStream(outputFile)) {
 			stream.write(decodedBytes);
@@ -186,19 +185,18 @@ public class BWEncoder extends Encoder {
 		return outputFile;
 	}
 
-
 	@Override
 	public void determineImageSize(int n) {
-    	for(int i = 5 ; i < 11 ; i++) {
-    		
-    		int newSize = (int) Math.pow(2, i);
-    		int allPixels = newSize * newSize;
-    		
-	    	if ((n*8) <= allPixels)  {
-	    		Util.imageSize = newSize;
-	    		MainWindow.previewWindow.setSize(100 + newSize,100 + newSize);
-	    		break;
-	    	}
-    	}
+		for (int i = 5; i < 15; i++) {
+
+			int newSize = (int) Math.pow(2, i);
+			int allPixels = newSize * newSize;
+
+			if ((n * 8) <= allPixels) {
+				Util.imageSize = newSize;
+				MainWindow.previewWindow.setSize(100 + newSize, 100 + newSize);
+				break;
+			}
+		}
 	}
 }

@@ -2,7 +2,7 @@ package de.GUI;
 
 public interface UIDefault {
 
-    public void applyDefaultSettings();
+	public void applyDefaultSettings();
 
-    public void addComponents();
+	public void addComponents();
 }
