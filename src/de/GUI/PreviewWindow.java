@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.sun.glass.ui.Window;
-
 import de.Utility.Util;
 
 public class PreviewWindow extends JFrame implements UIDefault, ActionListener {
