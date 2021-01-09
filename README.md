@@ -1,5 +1,6 @@
 # Byte Image Encoder
-This program can encode/decode data from and into pixels <br>
+
+Encodes and Decodes data from and into images.
 
 <br>
 
@@ -14,13 +15,25 @@ This program can encode/decode data from and into pixels <br>
 
 </td>
 <td>
-notepad.exe encoded
+notepad.exe as an image
 
 ![Example Image 2](example2.PNG)
 
 </td>
 </tr>
 </table>
+
+# Encoding types
+Some example text converted into an RGB and B/W image:
+<p/>
+RGB 
+<br>
+
+![Example Image 4](example4.PNG)
+
+Black/White
+
+![Example Image 3](example3.PNG)
 
 # Author 
 *Simon Lixenfeld 2020*

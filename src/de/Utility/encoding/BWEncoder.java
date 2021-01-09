@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import de.GUI.MainWindow;
 import de.GUI.panes.FileEncodingPane;
 import de.Utility.FileManager;
 import de.Utility.Util;
@@ -196,6 +197,7 @@ public class BWEncoder extends Encoder {
     		
 	    	if ((n*8) <= allPixels)  {
 	    		Util.imageSize = newSize;
+	    		MainWindow.previewWindow.setSize(100 + newSize,100 + newSize);
 	    		break;
 	    	}
     	}
