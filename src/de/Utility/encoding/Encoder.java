@@ -20,6 +20,8 @@ public abstract class Encoder {
         grid.y = (grid.x == 0) ? (grid.y+1) : grid.y;
     }
 
+    public abstract void determineImageSize(int n);
+    
     public abstract BufferedImage encode(String text);
     
     public abstract BufferedImage encode(int[] bytes);

@@ -21,7 +21,10 @@ public class BWEncoder extends Encoder {
 	@Override
 	public BufferedImage encode(String text) {
 		text = " " + text;
-		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
+		
+		determineImageSize(text.length());
+		
+		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
 
 		int charPos = 1;
@@ -38,7 +41,10 @@ public class BWEncoder extends Encoder {
 	
 	@Override
 	public BufferedImage encode(int[] bytes) {
-		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
+		
+		determineImageSize(bytes.length);
+		
+		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
 		
 		int charPos = 1;
@@ -51,11 +57,6 @@ public class BWEncoder extends Encoder {
 		placeEndpoint(g);
 		
 		return image;
-	}
-
-	private void placeEndpoint(Graphics g) {
-		g.setColor(new Color(255, 0, 0));
-		g.fillRect(grid.x, grid.y, 1, 1);
 	}
 
 	private void paintCharToGrid(char character, Graphics g, int charPos) {
@@ -85,6 +86,12 @@ public class BWEncoder extends Encoder {
 		charPos++;
 	}
 	
+	private void placeEndpoint(Graphics g) {
+		g.setColor(new Color(1, 1, 1));
+
+		g.fillRect(grid.x, grid.y, 1, 1);
+	}
+
 	@Override
 	public String decodeToText(BufferedImage image) {
 		StringBuilder decodedText = new StringBuilder();
@@ -98,7 +105,8 @@ public class BWEncoder extends Encoder {
 			int red = (pixel >> 16) & 0xff;
 			int green = (pixel >> 8) & 0xff;
 			int blue = (pixel) & 0xff;
-
+			
+			
 			if ((red + green + blue) > 200)
 				bits[bitCounter] = 0;
 			else
@@ -112,9 +120,10 @@ public class BWEncoder extends Encoder {
 			}
 			
 			getNextCoordinate();
-			
-			if (red > 250 && blue == 0 && green == 0 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1)
+
+			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1) {
 				return decodedText.toString();
+			}
 		}
 	}
 
@@ -159,7 +168,7 @@ public class BWEncoder extends Encoder {
 			
 			getNextCoordinate();
 			
-			if (red > 250 && blue == 0 && green == 0 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1)
+			if (red == 13 && blue == 13 && green == 13 || grid.x > Util.imageSize-1 || grid.y > Util.imageSize-1)
 				break;
 		}
 		
@@ -175,5 +184,20 @@ public class BWEncoder extends Encoder {
 		}
 
 		return outputFile;
+	}
+
+
+	@Override
+	public void determineImageSize(int n) {
+    	for(int i = 5 ; i < 11 ; i++) {
+    		
+    		int newSize = (int) Math.pow(2, i);
+    		int allPixels = newSize * newSize;
+    		
+	    	if ((n*8) <= allPixels)  {
+	    		Util.imageSize = newSize;
+	    		break;
+	    	}
+    	}
 	}
 }
