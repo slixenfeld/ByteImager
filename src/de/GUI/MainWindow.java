@@ -25,118 +25,120 @@ public class MainWindow extends JFrame implements UIDefault, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int defaultWidth = 580;
-    private static final int defaultHeight = 450;
+	private static final int defaultHeight = 450;
 
-    private JTabbedPane tabs;
-    private TextEncodingPane textPane = new TextEncodingPane();
-    private FileEncodingPane filePane = new FileEncodingPane();
+	private JTabbedPane tabs;
+	private TextEncodingPane textPane = new TextEncodingPane();
+	private FileEncodingPane filePane = new FileEncodingPane();
 
+	private JButton saveButton;
+	private JButton loadButton;
+	private JButton previewButton;
 
-    private JButton saveButton;
-    private JButton loadButton;
-    private JButton previewButton;
+	private JLabel encoderLabel;
+	public static JRadioButton rgbRadio;
+	public static JRadioButton bwRadio;
+	private ButtonGroup encoderGroup;
 
-    private JLabel encoderLabel;
-    public static JRadioButton rgbRadio;
-    public static JRadioButton bwRadio;
-    private ButtonGroup encoderGroup;
-    
-    public static PreviewWindow previewWindow = new PreviewWindow();
+	public static PreviewWindow previewWindow = new PreviewWindow();
 
-    public static Encoder encoder = new RGBEncoder();
+	public static Encoder encoder = new RGBEncoder();
 
-    public MainWindow() {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-        } catch (Exception e) { Util.log("Windows Classic Look And Feel Not Supported."); }
-        addComponents();
-        applyDefaultSettings();
-        
-        this.addComponentListener(new ComponentAdapter() {
-        	public void componentMoved(ComponentEvent e) {
-        	
-            	previewWindow.setLocation(MainWindow.this.getLocation().x + MainWindow.this.getWidth(),MainWindow.this.getLocation().y);
-        	}
-        });
-    }
+	public MainWindow() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		} catch (Exception e) {
+			Util.log("Windows Classic Look And Feel Not Supported.");
+		}
+		addComponents();
+		applyDefaultSettings();
 
-    public void applyDefaultSettings() {
-        this.setTitle("Byte Image Encoder");
-        this.setSize(defaultWidth,defaultHeight);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setLayout(null);
-        this.setVisible(true);
-    }
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentMoved(ComponentEvent e) {
 
-    public void addComponents() {
+				previewWindow.setLocation(MainWindow.this.getLocation().x + MainWindow.this.getWidth(),
+						MainWindow.this.getLocation().y);
+			}
+		});
+	}
 
-        textPane = new TextEncodingPane();
-        filePane = new FileEncodingPane();
+	public void applyDefaultSettings() {
+		this.setTitle("Byte Image Encoder");
+		this.setSize(defaultWidth, defaultHeight);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.setLayout(null);
+		this.setVisible(true);
+	}
 
-        tabs = new JTabbedPane();
-        tabs.setSize(320,390);
-        tabs.setLocation(10,10);
-        tabs.addTab("Text", textPane);
-        tabs.addTab("File", filePane);
-        this.add(tabs);
+	public void addComponents() {
 
-        loadButton = new JButton("Load");
-        loadButton.setSize(100,30);
-        loadButton.setLocation( 340,100);
-        loadButton.addActionListener(this);
-        this.add(loadButton);
+		textPane = new TextEncodingPane();
+		filePane = new FileEncodingPane();
 
-        saveButton = new JButton("Save");
-        saveButton.setSize(100,30);
-        saveButton.setLocation(450,100);
-        saveButton.addActionListener(this);
-        this.add(saveButton);
-        
-        previewButton = new JButton("Preview");
-        previewButton.setSize(100,30);
-        previewButton.setLocation(450,50);
-        previewButton.addActionListener(this);
-        this.add(previewButton);
-        
-        encoderLabel = new JLabel("Encoding Type:");
-        encoderLabel.setSize(100,25);
-        encoderLabel.setLocation(350,280);
-        this.add(encoderLabel);
+		tabs = new JTabbedPane();
+		tabs.setSize(320, 390);
+		tabs.setLocation(10, 10);
+		tabs.addTab("Text", textPane);
+		tabs.addTab("File", filePane);
+		this.add(tabs);
 
-        rgbRadio = new JRadioButton("RGB");
-        rgbRadio.setSize(55,25);
-        rgbRadio.setLocation(350,300);
-        rgbRadio.addActionListener(this);
-        rgbRadio.setSelected(true);
-        this.add(rgbRadio);
+		loadButton = new JButton("Load");
+		loadButton.setSize(100, 30);
+		loadButton.setLocation(340, 100);
+		loadButton.addActionListener(this);
+		this.add(loadButton);
 
-        bwRadio = new JRadioButton("BW");
-        bwRadio.setSize(55,25);
-        bwRadio.setLocation(420,300);
-        bwRadio.addActionListener(this);
-        this.add(bwRadio);
+		saveButton = new JButton("Save");
+		saveButton.setSize(100, 30);
+		saveButton.setLocation(450, 100);
+		saveButton.addActionListener(this);
+		this.add(saveButton);
 
-        encoderGroup = new ButtonGroup();
-        encoderGroup.add(rgbRadio);
-        encoderGroup.add(bwRadio);
+		previewButton = new JButton("Preview");
+		previewButton.setSize(100, 30);
+		previewButton.setLocation(450, 50);
+		previewButton.addActionListener(this);
+		this.add(previewButton);
 
-    }
+		encoderLabel = new JLabel("Encoding Type:");
+		encoderLabel.setSize(100, 25);
+		encoderLabel.setLocation(350, 280);
+		this.add(encoderLabel);
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loadButton)
+		rgbRadio = new JRadioButton("RGB");
+		rgbRadio.setSize(55, 25);
+		rgbRadio.setLocation(350, 300);
+		rgbRadio.addActionListener(this);
+		rgbRadio.setSelected(true);
+		this.add(rgbRadio);
+
+		bwRadio = new JRadioButton("BW");
+		bwRadio.setSize(55, 25);
+		bwRadio.setLocation(420, 300);
+		bwRadio.addActionListener(this);
+		this.add(bwRadio);
+
+		encoderGroup = new ButtonGroup();
+		encoderGroup.add(rgbRadio);
+		encoderGroup.add(bwRadio);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == loadButton)
 			loadImage();
 		else if (e.getSource() == saveButton)
 			saveImage();
 		else if (e.getSource() == previewButton) {
 			previewWindow.setVisible(true);
-        	previewWindow.setLocation(this.getLocation().x + this.getWidth(),this.getLocation().y);
+			previewWindow.setLocation(this.getLocation().x + this.getWidth(), this.getLocation().y);
 		} else if (e.getSource() == rgbRadio)
-            encoder = new RGBEncoder();
-        else if (e.getSource() == bwRadio)
-            encoder = new BWEncoder();
-    }
+			encoder = new RGBEncoder();
+		else if (e.getSource() == bwRadio)
+			encoder = new BWEncoder();
+	}
 
 	private void saveImage() {
 		FileManager.saveImage(PreviewWindow.preview.getImage(), this);
