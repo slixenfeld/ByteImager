@@ -28,7 +28,7 @@ public class BWEncoder extends Encoder {
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
 
-		int charPos = 1;
+		int charPos = 0;
 		grid = new Point(0, 0);
 
 		while (charPos < text.length()) {
@@ -48,7 +48,7 @@ public class BWEncoder extends Encoder {
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_BYTE_GRAY);
 		Graphics g = image.createGraphics();
 		
-		int charPos = 1;
+		int charPos = 0;
 		grid = new Point(0, 0);
 		
 		for (int i = 0 ; i < bytes.length; i++) {
@@ -112,7 +112,7 @@ public class BWEncoder extends Encoder {
 				bits[bitCounter] = 0;
 			else
 				bits[bitCounter] = 1;
-
+			
 			bitCounter++;
 			if (bitCounter == 8) {
 				decodedText.append(assembleChar(bits));
@@ -147,9 +147,8 @@ public class BWEncoder extends Encoder {
 		grid = new Point(0, 0);
 
 		while (true) {
+			
 			int pixel = image.getRGB(grid.x, grid.y);
-			
-			
 			int red = (pixel >> 16) & 0xff;
 			int green = (pixel >> 8) & 0xff;
 			int blue = (pixel) & 0xff;
