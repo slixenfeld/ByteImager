@@ -1,8 +1,13 @@
 package de;
 
-import de.GUI.MainWindow;
+import de.Windows.MainWindow;
+import lombok.Data;
 
+@Data
 public class ByteImager {
+	
+	public static final String version = "0.0.00000000000001";
+	
 	public static void main(String args[]) {
 		new MainWindow();
 	}

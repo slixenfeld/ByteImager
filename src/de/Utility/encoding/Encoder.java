@@ -4,8 +4,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import de.GUI.panes.FileEncodingPane;
 import de.Utility.Util;
+import de.Windows.panes.FileEncodingPane;
 
 public abstract class Encoder {
 

@@ -9,10 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import de.GUI.MainWindow;
-import de.GUI.panes.FileEncodingPane;
 import de.Utility.FileManager;
 import de.Utility.Util;
+import de.Windows.MainWindow;
+import de.Windows.panes.FileEncodingPane;
 
 public class RGBEncoder extends Encoder {
 	public static int add = 0;

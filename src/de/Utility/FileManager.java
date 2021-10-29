@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import de.GUI.panes.FileEncodingPane;
 import de.Utility.encoding.Encoder;
+import de.Windows.panes.FileEncodingPane;
 
 public class FileManager {
 
