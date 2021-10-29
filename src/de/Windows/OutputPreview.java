@@ -1,4 +1,4 @@
-package de.GUI;
+package de.Windows;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import de.Utility.Util;
-
+import lombok.Getter;
+import lombok.Setter;
+@Getter @Setter
 public class OutputPreview extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -29,13 +31,5 @@ public class OutputPreview extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, this);
-	}
-
-	public BufferedImage getImage() {
-		return image;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
 	}
 }
