@@ -11,9 +11,9 @@ public abstract class Window extends JFrame implements UIDefault {
 
 	public Window() {
 		try {
-			UIManager.setLookAndFeel("");
+			UIManager.setLookAndFeel(WindowsClassic);
 		} catch (Exception e) {
-			log("Windows Classic Look And Feel Not Supported.");
+			log("Look And Feel Not Supported.");
 		}
 	}
 }
