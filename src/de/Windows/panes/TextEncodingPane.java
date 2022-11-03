@@ -5,11 +5,11 @@ import static de.Utility.Util.addButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import de.Utility.encoding.Encoder;
 import de.Windows.MainWindow;
 import de.Windows.PreviewWindow;
 import de.Windows.UIDefault;
@@ -60,7 +60,8 @@ public class TextEncodingPane extends EncodingPane implements UIDefault {
 
 	@Override
 	void encode() {
-		PreviewWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText()));
+		Encoder.byteArraySize = inputText.getText().length();
+		PreviewWindow.preview.updateImage(MainWindow.encoder.encode(inputText.getText().getBytes()));
 	}
 
 	@Override

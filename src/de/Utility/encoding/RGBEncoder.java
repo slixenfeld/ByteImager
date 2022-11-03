@@ -21,44 +21,7 @@ public class RGBEncoder extends Encoder {
 	}
 
 	@Override
-	public BufferedImage encode(String text) {
-		text = " " + text;
-
-		determineImageSize(text.length());
-
-		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
-		Graphics g = image.createGraphics();
-
-		int charPos = 0;
-		grid = new Point(0, 0);
-
-		while (charPos < text.length()) {
-
-			charPos++;
-			int red = (charPos >= text.length()) ? 0 : (int) text.charAt(charPos);
-
-			charPos++;
-			int green = (charPos >= text.length()) ? 0 : (int) text.charAt(charPos);
-
-			charPos++;
-			int blue = (charPos >= text.length()) ? 0 : (int) text.charAt(charPos);
-
-			try {
-				Color pixelColor = new Color(red, green, blue);
-				g.setColor(pixelColor);
-			} catch (Exception e) {
-				Util.log("pixel was outside of color range: (" + (blue + add) + "," + (green + add) + "," + (red + add)
-						+ ")");
-			}
-
-			g.fillRect(grid.x, grid.y, 1, 1);
-			getNextCoordinate();
-		}
-		return image;
-	}
-
-	@Override
-	public BufferedImage encode(int[] bytes) {
+	public BufferedImage encode(byte[] bytes) {
 
 		determineImageSize(bytes.length);
 
@@ -166,5 +129,4 @@ public class RGBEncoder extends Encoder {
 			}
 		}
 	}
-
 }
