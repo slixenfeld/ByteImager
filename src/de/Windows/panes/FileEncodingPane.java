@@ -53,7 +53,6 @@ public class FileEncodingPane extends EncodingPane implements UIDefault {
 
 	@Override
 	void decode() {
-		outputText.setText(MainWindow.encoder.decodeToText(PreviewWindow.preview.getImage()));
 		MainWindow.encoder.decodeToFile(thisPane, PreviewWindow.preview.getImage());
 	}
 	
