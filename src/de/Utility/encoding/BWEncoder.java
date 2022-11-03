@@ -67,7 +67,6 @@ public class BWEncoder extends Encoder {
 				bits[bitCounter] = 1;
 
 			bitCounter++;
-			System.out.println(bitCounter);
 			if (bitCounter == 8) {
 				try {
 					counter++;
