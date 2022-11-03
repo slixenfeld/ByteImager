@@ -13,12 +13,10 @@ import de.Utility.FileManager;
 import de.Utility.Util;
 import de.Windows.MainWindow;
 import de.Windows.panes.FileEncodingPane;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class RGBEncoder extends Encoder {
-	public static int add = 0;
-
-	public RGBEncoder() {
-	}
 
 	@Override
 	public BufferedImage encode(byte[] bytes) {
@@ -54,8 +52,8 @@ public class RGBEncoder extends Encoder {
 					temp_highest_red = red;
 				}
 			} catch (Exception e) {
-				Util.log("pixel was outside of color range: (" + (blue + add) + "," + (green + add) + "," + (red + add)
-						+ ")");
+				Util.log("pixel was outside of color range: ("
+						+ (blue) + "," + (green) + "," + (red)+ ")");
 			}
 
 			g.fillRect(grid.x, grid.y, 1, 1);
@@ -67,22 +65,10 @@ public class RGBEncoder extends Encoder {
 
 	@Override
 	public String decodeToText(BufferedImage image) {
-		StringBuilder decodedText = new StringBuilder();
-
-		for (int i = 0; i < image.getHeight(); i++)
-			for (int j = 0; j < image.getWidth(); j++) {
-				int pixel = image.getRGB(j, i);
-				int red = (pixel >> 16) & 0xff;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
-
-				decodedText.append((char) (red)).append((char) (green)).append((char) (blue));
-			}
-		return decodedText.toString();
+		return new String(decode(image));
 	}
 
-	@Override
-	public File decodeToFile(FileEncodingPane pane, BufferedImage image) {
+	private byte[] decode(BufferedImage image) {
 
 		byte[] decodedBytes = new byte[Encoder.byteArraySize];
 		int counter = -1;
@@ -111,15 +97,18 @@ public class RGBEncoder extends Encoder {
 					decodedBytes[counter] = (byte) (blue);
 
 			}
+		return decodedBytes;
+	}
+	
+	@Override
+	public File decodeToFile(FileEncodingPane pane, BufferedImage image) {
 
+		byte[] decodedBytes = decode(image);
+		
 		File outputFile = FileManager.saveFile(pane);
 		try (FileOutputStream stream = new FileOutputStream(outputFile)) {
 			stream.write(decodedBytes);
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
