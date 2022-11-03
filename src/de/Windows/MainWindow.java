@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
+import de.ByteImager;
 import de.Utility.FileManager;
 import de.Utility.encoding.BWEncoder;
 import de.Utility.encoding.Encoder;
@@ -24,8 +25,8 @@ import de.Windows.panes.TextEncodingPane;
 public class MainWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
-	private static final int defaultWidth = 580;
-	private static final int defaultHeight = 450;
+	private static final int defaultWidth = 450;
+	private static final int defaultHeight = 430;
 
 	private JTabbedPane tabs;
 	private TextEncodingPane textPane;
@@ -58,7 +59,7 @@ public class MainWindow extends Window {
 
 	@Override
 	public void applyDefaultSettings() {
-		this.setTitle("Byte Image Encoder");
+		this.setTitle("ByteImager " + ByteImager.version);
 		this.setSize(defaultWidth, defaultHeight);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -70,24 +71,8 @@ public class MainWindow extends Window {
 	public void addComponents() {
 
 		addPanes();
-
-		addButton(thisWindow, "Load", 340, 100, 100, 30 ,new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loadImage();
-			}
-		});
 		
-		addButton(thisWindow, "Save", 450, 100, 100, 30, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				saveImage();
-			}
-		});
-		
-		addButton(thisWindow, "Preview", 450, 50, 100, 30,
+		addButton(thisWindow, "Preview", 335, 30, 100, 30,
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -99,9 +84,25 @@ public class MainWindow extends Window {
 				}
 		);
 		
-		addLabel(thisWindow, "Encoding Type:" ,350, 280, 100, 25);
+		addButton(thisWindow, "Load", 335, 65, 100, 30 ,new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadImage();
+			}
+		});
 		
-		add(rgbRadio = newRadioButton(thisWindow, "RGB", true, 350, 300, 55, 25, new ActionListener() {
+		addButton(thisWindow, "Save", 335, 100, 100, 30, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveImage();
+			}
+		});
+
+		addLabel(thisWindow, "Encoding Type:" ,335, 130, 150, 25);
+		
+		add(rgbRadio = newRadioButton(thisWindow, "RGB", true, 335, 150, 50, 25, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -109,7 +110,7 @@ public class MainWindow extends Window {
 			}
 		}));
 		
-		add(bwRadio = newRadioButton(thisWindow, "BW", true, 420, 300, 55, 25, new ActionListener() {
+		add(bwRadio = newRadioButton(thisWindow, "BW", true, 390, 150, 65, 25, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -128,7 +129,7 @@ public class MainWindow extends Window {
 		filePane = new FileEncodingPane();
 
 		tabs = new JTabbedPane();
-		tabs.setBounds(10, 10, 320, 390);
+		tabs.setBounds(10, 10, 320, 420);
 		tabs.addTab("Text", textPane);
 		tabs.addTab("File", filePane);
 		this.add(tabs);
