@@ -23,6 +23,8 @@ public class RGBEncoder extends Encoder {
 	@Override
 	public BufferedImage encode(byte[] bytes) {
 
+		int temp_highest_red = 0;
+		
 		determineImageSize(bytes.length);
 
 		BufferedImage image = new BufferedImage(Util.imageSize, Util.imageSize, BufferedImage.TYPE_INT_RGB);
@@ -35,16 +37,22 @@ public class RGBEncoder extends Encoder {
 
 			charPos++;
 			int red = (charPos >= bytes.length) ? 0 : bytes[charPos];
+			if (red < 0) red = 127 + (-red);
 
 			charPos++;
 			int green = (charPos >= bytes.length) ? 0 : bytes[charPos];
+			if (green < 0) green = 127 + (-green);
 
 			charPos++;
 			int blue = (charPos >= bytes.length) ? 0 : bytes[charPos];
+			if (blue < 0) blue = 127 + (-blue);
 
 			try {
 				Color pixelColor = new Color(red, green, blue);
 				g.setColor(pixelColor);
+				if (red > temp_highest_red) {
+					temp_highest_red = red;
+				}
 			} catch (Exception e) {
 				Util.log("pixel was outside of color range: (" + (blue + add) + "," + (green + add) + "," + (red + add)
 						+ ")");
@@ -88,14 +96,17 @@ public class RGBEncoder extends Encoder {
 				int blue = (pixel) & 0xff;
 
 				counter++;
+				if (red > 127) red = -(red-127);
 				if (counter < Encoder.byteArraySize)
 					decodedBytes[counter] = (byte) (red);
 
 				counter++;
+				if (green > 127) green = -(green-127);
 				if (counter < Encoder.byteArraySize)
 					decodedBytes[counter] = (byte) (green);
 
 				counter++;
+				if (blue > 127) blue = -(blue-127);
 				if (counter < Encoder.byteArraySize)
 					decodedBytes[counter] = (byte) (blue);
 

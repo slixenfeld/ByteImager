@@ -84,7 +84,7 @@ public class MainWindow extends Window {
 				}
 		);
 		
-		addButton(thisWindow, "Load", 335, 65, 100, 30 ,new ActionListener() {
+		addButton(thisWindow, "Load...", 335, 65, 100, 30 ,new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,7 @@ public class MainWindow extends Window {
 			}
 		});
 		
-		addButton(thisWindow, "Save", 335, 100, 100, 30, new ActionListener() {
+		addButton(thisWindow, "Save...", 335, 100, 100, 30, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

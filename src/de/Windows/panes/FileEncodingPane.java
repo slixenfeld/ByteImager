@@ -33,26 +33,16 @@ public class FileEncodingPane extends EncodingPane implements UIDefault {
 	@Override
 	public void addComponents() {
 
-		addButton(this, "Encode", 200, 130, 100, 30, new ActionListener() {
+		addButton(this, "Encode File...", 200, 130, 100, 30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {encode();}
 		});
 		
-		addButton(this, "Decode", 200, 325, 100, 30, new ActionListener() {
+		addButton(this, "Decode to...", 200, 325, 100, 30, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {decode();}
 		});
 		
-		
-		outputText = new JTextArea("");
-		outputText.setLineWrap(true);
-		
-		JScrollPane scroll_outputText = new JScrollPane(outputText);
-		
-		scroll_outputText.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scroll_outputText.setSize(300, 150);
-		scroll_outputText.setLocation(5, 170);
-		this.add(scroll_outputText);
 	}
 
 	@Override
