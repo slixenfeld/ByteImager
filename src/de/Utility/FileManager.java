@@ -84,10 +84,9 @@ public class FileManager {
 		}
 	}
 
-	public static int[] loadFileIntoArray(File file) {
+	public static byte[] loadFileIntoArray(File file) {
 		FileInputStream fileInputStream = null;
 		byte[] bFile = new byte[(int) file.length()];
-		int[] bnewFile = new int[(int) file.length()];
 		Encoder.byteArraySize = bFile.length;
 		try {
 			fileInputStream = new FileInputStream(file);
@@ -97,11 +96,6 @@ public class FileManager {
 			e.printStackTrace();
 		}
 
-		// convert to int array so it works idk
-		for (int i = 0; i < bFile.length; i++)
-			bnewFile[i] = (bFile[i] & 0xff);
-
-		return bnewFile;
+		return bFile;
 	}
-
 }

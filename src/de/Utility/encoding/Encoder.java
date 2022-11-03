@@ -23,9 +23,7 @@ public abstract class Encoder {
 
 	public abstract void determineImageSize(int n);
 
-	public abstract BufferedImage encode(String text);
-
-	public abstract BufferedImage encode(int[] bytes);
+	public abstract BufferedImage encode(byte[] bytes);
 
 	public abstract String decodeToText(BufferedImage image);
 
