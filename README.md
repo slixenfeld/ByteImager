@@ -15,6 +15,3 @@ RGB
 Black/White
 
 ![Example Image BW](bw.png)
-
-# Author 
-*slxfld 2020*
